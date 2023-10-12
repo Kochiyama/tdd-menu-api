@@ -11,14 +11,14 @@ impl<T> HttpResponse<T> {
         }
     }
 
-    pub fn bad_request(message: &str) -> Self {
+    pub fn bad_request(message: &'static str) -> Self {
         Self {
             status_code: 400,
             body: Err(message),
         }
     }
 
-    pub fn internal_error(message: &str) -> Self {
+    pub fn internal_error(message: &'static str) -> Self {
         Self {
             status_code: 500,
             body: Err(message),
