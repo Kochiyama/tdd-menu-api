@@ -22,7 +22,7 @@ impl<'a> Controller<AddBannerDto, Banner> for AddBannerController<'a> {
         println!("request: {:#?}", request);
         match self.add_banner.execute(request.file_name) {
             Ok(banner) => HttpResponse::success(banner),
-            Err(message) => HttpResponse::internal_error(message),
+            Err(message) => HttpResponse::bad_request(message),
         }
     }
 }
@@ -77,6 +77,30 @@ mod tests {
                 String::from("fake_uuid"),
                 String::from("test_file.txt"),
             ))
+        )
+    }
+
+    #[test]
+    fn should_return_bad_request_with_correct_error_message() {
+        let dto = AddBannerDto {
+            file_name: String::from("test_file.txt"),
+        };
+
+        let mut add_banner_mock = MockAddBanner::new();
+
+        add_banner_mock
+            .expect_execute()
+            .with(eq(dto.file_name.clone()))
+            .times(1)
+            .returning(|file_name| Err(String::from("sample error message")));
+
+        let sut = AddBannerController::new(&add_banner_mock);
+
+        let result = sut.handle(dto);
+
+        assert_eq!(
+            result,
+            HttpResponse::bad_request(String::from("sample error message"))
         )
     }
 }
