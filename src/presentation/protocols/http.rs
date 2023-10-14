@@ -1,3 +1,4 @@
+#[derive(PartialEq, Debug)]
 pub struct HttpResponse<T> {
     status_code: i32,
     body: Result<T, String>,

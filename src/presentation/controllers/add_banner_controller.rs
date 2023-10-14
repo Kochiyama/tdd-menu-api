@@ -52,4 +52,31 @@ mod tests {
 
         sut.handle(dto);
     }
+
+    #[test]
+    fn should_return_banner_on_success() {
+        let dto = AddBannerDto {
+            file_name: String::from("test_file.txt"),
+        };
+
+        let mut add_banner_mock = MockAddBanner::new();
+
+        add_banner_mock
+            .expect_execute()
+            .with(eq(dto.file_name.clone()))
+            .times(1)
+            .returning(|file_name| Ok(Banner::new(String::from("fake_uuid"), file_name)));
+
+        let sut = AddBannerController::new(&add_banner_mock);
+
+        let result = sut.handle(dto);
+
+        assert_eq!(
+            result,
+            HttpResponse::success(Banner::new(
+                String::from("fake_uuid"),
+                String::from("test_file.txt"),
+            ))
+        )
+    }
 }
