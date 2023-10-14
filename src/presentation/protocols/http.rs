@@ -1,6 +1,6 @@
 pub struct HttpResponse<T> {
     status_code: i32,
-    body: Result<T, &'static str>,
+    body: Result<T, String>,
 }
 
 impl<T> HttpResponse<T> {
@@ -11,14 +11,14 @@ impl<T> HttpResponse<T> {
         }
     }
 
-    pub fn bad_request(message: &'static str) -> Self {
+    pub fn bad_request<'a>(message: String) -> Self {
         Self {
             status_code: 400,
             body: Err(message),
         }
     }
 
-    pub fn internal_error(message: &'static str) -> Self {
+    pub fn internal_error<'a>(message: String) -> Self {
         Self {
             status_code: 500,
             body: Err(message),
