@@ -1,6 +1,6 @@
 use crate::{
-    application::repositories::add_banner_repository::AddBannerRepository,
     business::{models::banner::Banner, use_cases::add_banner::AddBanner},
+    data::repositories::add_banner_repository::AddBannerRepository,
 };
 
 pub struct AddBannerUseCase<'a> {
@@ -23,7 +23,7 @@ impl<'a> AddBanner for AddBannerUseCase<'a> {
 
 #[cfg(test)]
 mod tests {
-    use crate::application::repositories::add_banner_repository::MockAddBannerRepository;
+    use crate::data::repositories::add_banner_repository::MockAddBannerRepository;
     use mockall::predicate::*;
 
     use super::*;
