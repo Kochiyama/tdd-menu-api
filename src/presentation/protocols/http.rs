@@ -1,3 +1,20 @@
+#[derive(Debug)]
+pub struct HttpRequest<B, Q, P> {
+    pub body: B,
+    pub query: Q,
+    pub params: P,
+}
+
+impl<B, Q, P> HttpRequest<B, Q, P> {
+    pub fn new(body: B, query: Q, params: P) -> Self {
+        Self {
+            body,
+            query,
+            params,
+        }
+    }
+}
+
 #[derive(PartialEq, Debug)]
 pub struct HttpResponse<T> {
     status_code: i32,

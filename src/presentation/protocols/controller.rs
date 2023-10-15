@@ -1,5 +1,7 @@
 use crate::presentation::protocols::http::HttpResponse;
 
-pub trait Controller<Req, Res> {
-    fn handle(&self, request: Req) -> HttpResponse<Res>;
+use super::http::HttpRequest;
+
+pub trait Controller<ReqBody, ReqQuery, ReqParams, Res> {
+    fn handle(&self, request: HttpRequest<ReqBody, ReqQuery, ReqParams>) -> HttpResponse<Res>;
 }
