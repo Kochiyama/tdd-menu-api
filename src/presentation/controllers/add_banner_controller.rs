@@ -1,7 +1,7 @@
-use crate::business::models::banner::Banner;
-use crate::business::use_cases::add_banner::AddBanner;
-use crate::presentation::protocols::http::HttpRequest;
-use crate::presentation::protocols::{controller::Controller, http::HttpResponse};
+use crate::business::{models::banner::Banner, use_cases::add_banner::AddBanner};
+use crate::presentation::protocols::{
+    controller::Controller, http::HttpRequest, http::HttpResponse,
+};
 
 #[derive(Debug)]
 struct AddBannerDto {
