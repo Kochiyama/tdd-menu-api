@@ -62,4 +62,27 @@ mod tests {
 
         assert_eq!(result, Err(String::from("sample error")))
     }
+
+    #[test]
+    fn should_return_created_banner_on_success() {
+        let mut add_banner_repository_mock = MockAddBannerRepository::new();
+
+        add_banner_repository_mock
+            .expect_create_banner()
+            .with(eq(String::from("test_file.txt")))
+            .times(1)
+            .returning(|file_name| Ok(Banner::new(String::from("fake_uuid"), file_name)));
+
+        let sut = AddBannerUseCase::new(&add_banner_repository_mock);
+
+        let result = sut.execute(String::from("test_file.txt"));
+
+        assert_eq!(
+            result,
+            Ok(Banner::new(
+                String::from("fake_uuid"),
+                String::from("test_file.txt")
+            ))
+        )
+    }
 }
