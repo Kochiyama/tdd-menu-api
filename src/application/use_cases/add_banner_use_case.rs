@@ -45,4 +45,21 @@ mod tests {
 
         sut.execute(String::from("test_file.txt")).unwrap();
     }
+
+    #[test]
+    fn should_forward_errors_returned_by_add_banner_repository() {
+        let mut add_banner_repository_mock = MockAddBannerRepository::new();
+
+        add_banner_repository_mock
+            .expect_create_banner()
+            .with(eq(String::from("test_file.txt")))
+            .times(1)
+            .returning(|_| Err(String::from("sample error")));
+
+        let sut = AddBannerUseCase::new(&add_banner_repository_mock);
+
+        let result = sut.execute(String::from("test_file.txt"));
+
+        assert_eq!(result, Err(String::from("sample error")))
+    }
 }
