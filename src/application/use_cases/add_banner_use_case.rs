@@ -23,10 +23,7 @@ impl<'a> AddBanner for AddBannerUseCase<'a> {
 
 #[cfg(test)]
 mod tests {
-    use crate::{
-        application::repositories::add_banner_repository::MockAddBannerRepository,
-        business::use_cases::add_banner::MockAddBanner,
-    };
+    use crate::application::repositories::add_banner_repository::MockAddBannerRepository;
     use mockall::predicate::*;
 
     use super::*;
